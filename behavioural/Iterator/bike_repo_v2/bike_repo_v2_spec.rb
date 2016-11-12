@@ -1,11 +1,22 @@
-require_relative "./bike_repo_v1"
+require_relative "./bike_repo_v2"
 require 'securerandom'
 require 'minitest/autorun'
 
+describe Bike do
+  let(:bike_1) { Bike.new(SecureRandom.base64(10), Date.today - 31) }
+  let(:bike_2) { Bike.new(SecureRandom.base64(10), Date.today - 29) }
+
+  describe '#<=>' do
+    it 'sort by stored_date ASC' do
+      (bike_1 < bike_2).must_equal true
+    end
+  end
+end
+
 describe BikeRepo do
   let(:bike_1) { Bike.new(SecureRandom.base64(10), Date.today - 31) }
-  let(:bike_2) { Bike.new(SecureRandom.base64(10), Date.today - 30) }
-  let(:bike_3) { Bike.new(SecureRandom.base64(10), Date.today - 29) }
+  let(:bike_2) { Bike.new(SecureRandom.base64(10), Date.today - 29) }
+  let(:bike_3) { Bike.new(SecureRandom.base64(10), Date.today - 30) }
 
   let(:bike_repo) { BikeRepo.new([bike_1, bike_2]) }
 
@@ -14,6 +25,25 @@ describe BikeRepo do
       bike_repo.collection.count.must_equal 2
       bike_repo.add_bike bike_3
       bike_repo.collection.count.must_equal 3
+    end
+  end
+
+  describe '#sort' do
+    it 'sorts by stored_date ASC' do
+      bike_repo.add_bike bike_3
+      bike_repo.sort.must_equal [bike_1, bike_3, bike_2]
+    end
+  end
+
+  describe '#min' do
+    it 'return bike that was stored first' do
+      bike_repo.min.must_equal bike_1
+    end
+  end
+
+  describe '#max' do
+    it 'return bike that was stored last' do
+      bike_repo.max.must_equal bike_2
     end
   end
 end

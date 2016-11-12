@@ -1,4 +1,4 @@
-require_relative "./bike_repo_v1"
+require_relative "./bike_repo_v2"
 require 'securerandom'
 
 bike_1 = Bike.new(SecureRandom.base64(10), Date.today - 31)
