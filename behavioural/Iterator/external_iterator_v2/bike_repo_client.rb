@@ -22,3 +22,4 @@ end
 puts "collection = #{i2.collection}"
 puts "i2 collection length = #{i2.collection.length}"
 puts "bike_repo collection length = #{bike_repo.collection.length}"
+
