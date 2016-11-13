@@ -20,10 +20,12 @@ describe EspressoCommand do
   let(:command) { EspressoCommand.new(machine_mock) }
   let(:machine_mock) { Minitest::Mock.new }
 
-  it 'calls #grind and #drip on machine' do
-    machine_mock.expect :grind, nil, ['espresso']
-    machine_mock.expect :drip, nil
-    barista.process_order
+  describe 'execute' do
+    it 'calls #grind and #drip on machine' do
+      machine_mock.expect :grind, nil, ['espresso']
+      machine_mock.expect :drip, nil
+      command.execute
+    end
   end
 end
 
@@ -32,10 +34,12 @@ describe CappuccinoCommand do
   let(:command) { CappuccinoCommand.new(machine_mock) }
   let(:machine_mock) { Minitest::Mock.new }
 
-  it 'calls #grind and #drip and #froth_milk on machine' do
-    machine_mock.expect :grind, nil, ['espresso']
-    machine_mock.expect :drip, nil
-    machine_mock.expect :froth_milk, nil
-    barista.process_order
+  describe 'execute' do
+    it 'calls #grind and #drip and #froth_milk on machine' do
+      machine_mock.expect :grind, nil, ['espresso']
+      machine_mock.expect :drip, nil
+      machine_mock.expect :froth_milk, nil
+      command.execute
+    end
   end
 end
