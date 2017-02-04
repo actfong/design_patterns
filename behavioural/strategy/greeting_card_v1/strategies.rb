@@ -1,6 +1,5 @@
 # Context
 class GreetingCard
-  attr_reader :recipient, :sender, :strategy
   def initialize(recipient, sender, strategy)
     @recipient = recipient
     @sender = sender
@@ -16,17 +15,18 @@ class GreetingCard
   end
 
 private
+  attr_reader :recipient, :sender, :strategy
 
   def greeting
     "Hi #{recipient}"
   end
 
   def body
-    @strategy.body
+    strategy.body
   end
 
   def closing
-    @strategy.closing(sender)
+    strategy.closing(sender)
   end
 
   def add_address

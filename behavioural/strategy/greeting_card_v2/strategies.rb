@@ -1,6 +1,5 @@
 # Context
 class GreetingCard
-  attr_reader :recipient, :sender, :strategy
   def initialize(recipient, sender, strategy)
     @recipient = recipient
     @sender = sender
@@ -10,18 +9,19 @@ class GreetingCard
   def write
     content = []
     content << greeting
-    content = content + body_and_closing
+    content.concat body_and_closing
     content << add_address
   end
 
 private
+  attr_reader :recipient, :sender, :strategy
 
   def greeting
     "Hi #{recipient}"
   end
 
   def body_and_closing
-    @strategy.call(sender)
+    strategy.call(sender)
   end
 
   def add_address
@@ -34,5 +34,5 @@ cheesy_style = lambda{ |sender| ["Very cheesy stuff in the body.", "From your ch
 for_parents_style = lambda{ |sender| ["Keep it short and boring.", "Bye,\n#{sender}"] }
 
 # Demo
-# puts GreetingCard.new('Rachael', 'Alex', cheesy_style).write.inspect
+puts GreetingCard.new('Rachael', 'Alex', cheesy_style).write.inspect
 # puts GreetingCard.new('Mum and Dadd', 'Alex', for_parents_style).write.inspect
